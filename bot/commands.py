@@ -3,7 +3,10 @@ from telegram.ext import (ContextTypes, ConversationHandler)
 from settings import MENU, WEATHER, COUNT
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Principal menu where user can choose between weather and count. It will return the next state."""
+    
     reply_keyboard = [['¡Quiero saber el clima!', '¡Quiero contar!']]
+    
     await update.message.reply_text(
         '<b>¡Bienvenido al DeltoBot!</b>\n'
         '¿En qué te puedo ayudar hoy?',
@@ -13,6 +16,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return MENU
 
 async def menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Intermediate state that will handle the user's choice and return the next state."""
+
     choice = update.message.text
     if choice == '¡Quiero saber el clima!':
         await update.message.reply_text("Has elegido conocer el clima. Por favor, ingresa el nombre de la ciudad:")
@@ -25,13 +30,15 @@ async def menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
         return MENU
     
 async def weather_flow(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    # Aquí obtendrías el nombre de la ciudad
+    """Weather flow where user asks for a city and the bot will move to the next state with the user input."""
+    
     city = update.message.text
-    # Lógica para llamar a la API del clima e interpretar la respuesta
+    
     await update.message.reply_text(f"Mostrando el clima para {city} (esta funcionalidad se implementará)...")
     return ConversationHandler.END
 
 async def count_flow(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    # Aquí se implementaría la lógica del contador (por ejemplo, incrementar y persistir)
+    """Count flow where the User will add 1 to his own counter."""
+    
     await update.message.reply_text("Contador incrementado. (Esta funcionalidad se implementará)...")
     return ConversationHandler.END
