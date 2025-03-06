@@ -1,10 +1,7 @@
 # models.py
 from sqlalchemy import create_engine, Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
-Base = declarative_base()
-
+from db.tables import Base
 SQLALCHEMY_DATABASE_URL = "sqlite:///./database.db"
 
 engine = create_engine(
