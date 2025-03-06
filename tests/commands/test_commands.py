@@ -3,7 +3,7 @@ import pytest
 from types import SimpleNamespace
 from bot.commands import start, menu_choice
 from settings import MENU, WEATHER, COUNT
-from tests.myupdater import MyUpdater
+from tests.helpers import MyUpdater
 
 @pytest.mark.asyncio
 async def test_start():
