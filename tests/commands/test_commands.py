@@ -1,7 +1,8 @@
 # tests/test_bot.py
 import pytest
 from types import SimpleNamespace
-from bot.commands import start, menu_choice
+from bot.commands.start import start
+from bot.flows.start_flow import menu_choice
 from settings import MENU, WEATHER, COUNT
 from tests.helpers import MyUpdater
 
