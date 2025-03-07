@@ -1,5 +1,5 @@
 # models.py
-from sqlalchemy import create_engine, Column, Integer
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db.tables import Base
 SQLALCHEMY_DATABASE_URL = "sqlite:///./database.db"
