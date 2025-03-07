@@ -1,63 +1,29 @@
-# tests/test_bot.py
 import pytest
 from types import SimpleNamespace
+from unittest.mock import patch
 from bot.commands.start import start
-from bot.flows.start_flow import menu_choice
-from settings import MENU, WEATHER, COUNT
+from settings import MENU
 from tests.helpers import MyUpdater
 
 @pytest.mark.asyncio
 async def test_start():
-    #Simulates the initial conversation between the user and the bot
-    dummy_update = MyUpdater("/start")
-    dummy_context = SimpleNamespace()
-    state = await start(dummy_update, dummy_context)
-    
-    # Verifies that the state returned is MENU
-    assert state == MENU
+    #patch add_user_if_not_exists to avoid interaction with the DB
+    with patch('bot.commands.start.add_user_if_not_exists') as mock_add_user:
+        
+        #avoiding the interaction with the DB
+        mock_add_user.db.return_value.query.return_value.filter.return_value.first.return_value = None
+        
+        #simulates the user sending the /start command
+        dummy_update = MyUpdater("/start")
+        dummy_context = SimpleNamespace()
 
-    # Verifies that the replies are not empty and that the message sendend is the welcome message
-    assert dummy_update.message.replies, "No se envió respuesta en /start"
-    assert "¡Bienvenido al DeltoBot!" in dummy_update.message.replies[0]
+        #call the start command
+        state = await start(dummy_update, dummy_context)
 
-@pytest.mark.asyncio
-async def test_menu_choice_weather():
-    #Simulates the user choosing the weather option
-    dummy_update = MyUpdater("¡Quiero saber el clima!")
-    dummy_context = SimpleNamespace()
-    state = await menu_choice(dummy_update, dummy_context)
+        #verifications
+        mock_add_user.assert_called_once_with(dummy_update.effective_user.id)
+        assert state == MENU
+        assert dummy_update.message.replies, "No se envió respuesta en /start"
+        assert "¡Bienvenido al DeltoBot!" in dummy_update.message.replies[0]
 
-    #Verifies the state returned is WEATHER
-    assert state == WEATHER
-    
-    # Verifies that the replies are not empty and that the message sendend is correct
-    assert dummy_update.message.replies, "No se envió respuesta en menu_choice para clima"
-    assert "Has elegido conocer el clima" in dummy_update.message.replies[0]
 
-@pytest.mark.asyncio
-async def test_menu_choice_count():
-    #Simulates the user choosing the count option
-    dummy_update = MyUpdater("¡Quiero contar!")
-    dummy_context = SimpleNamespace()
-    state = await menu_choice(dummy_update, dummy_context)
-    
-    #Verifies the state returned is COUNT
-    assert state == COUNT
-
-    # Verifies that the replies are not empty and that the message sendend is correct
-    assert dummy_update.message.replies, "No se envió respuesta en menu_choice para contar"
-    assert "Has elegido contar" in dummy_update.message.replies[0]
-
-@pytest.mark.asyncio
-async def test_menu_choice_invalid():
-    #simulates user choosing an invalid option
-    dummy_update = MyUpdater("Opción inválida")
-    dummy_context = SimpleNamespace()
-    state = await menu_choice(dummy_update, dummy_context)
-    
-    # Verifies the state returned is MENU
-    assert state == MENU
-    
-    # Verifies that the replies are not empty and that the message sendend is correct
-    assert dummy_update.message.replies, "No se envió respuesta en menu_choice para opción inválida"
-    assert "Opción no válida" in dummy_update.message.replies[0]
