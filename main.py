@@ -4,6 +4,7 @@ from telegram.ext import (Application)
 from settings import TELEGRAM_BOT_TOKEN
 from bot.handlers.start_handler import get_start_handler
 from db.main import init_db
+from db.connection import delete_user
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
