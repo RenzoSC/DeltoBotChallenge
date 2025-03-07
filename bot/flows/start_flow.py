@@ -2,6 +2,8 @@ from telegram.ext import (ContextTypes, ConversationHandler)
 from telegram import Update
 from settings import MENU, WEATHER
 from db.connection import add_count_to_user
+from bot.utils.openweather import get_weather
+from bot.utils.magicloop import get_weather_analisis
 import logging
 
 logger = logging.getLogger(__name__) 
@@ -30,8 +32,12 @@ async def weather_flow(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     logger.info("weather_flow")
 
     city = update.message.text
-    
-    await update.message.reply_text(f"Mostrando el clima para {city} (esta funcionalidad se implementará)...")
+    weather_response = get_weather(city)
+    if weather_response.get('cod', 400) != 200:
+        await update.message.reply_text(f"Ha ocurrido un error al obtener el clima de la ciudad {city}, ¿Podrías asegurarte de haber solicitado una ciudad válida?.")
+    else:
+        analisis = get_weather_analisis(weather_response)
+        await update.message.reply_text(analisis)
     return ConversationHandler.END
 
 async def count_option(update: Update, context: ContextTypes.DEFAULT_TYPE):

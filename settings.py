@@ -2,4 +2,7 @@ TELEGRAM_BOT_TOKEN=''
 
 MENU, WEATHER, COUNT = range(3)
 
+OPENWEATHER_API_KEY=''
+
+MAGICLOOP_WEATHER_FUNCTION_KEY=''
 from settings_local import *
