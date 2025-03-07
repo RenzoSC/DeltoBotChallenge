@@ -1,7 +1,8 @@
 import pytest
 from types import SimpleNamespace
 from bot.flows.start_flow import menu_choice
-from settings import MENU, WEATHER, COUNT
+from unittest.mock import patch, AsyncMock
+from settings import MENU, WEATHER
 from tests.helpers import MyUpdater
 
 @pytest.mark.asyncio
@@ -18,15 +19,17 @@ async def test_menu_choice_weather():
 
 @pytest.mark.asyncio
 async def test_menu_choice_count():
-    #simulates the user choosing the count option
-    dummy_update = MyUpdater("¡Quiero contar!")
-    dummy_context = SimpleNamespace()
-    state = await menu_choice(dummy_update, dummy_context)
-    
-    #verifications
-    assert state == COUNT
-    assert dummy_update.message.replies, "No se envió respuesta en menu_choice para contar"
-    assert "Has elegido contar" in dummy_update.message.replies[0]
+    with patch("bot.flows.start_flow.add_count_to_user", return_value=1):
+        # Simula la entrada del usuario eligiendo la opción de contar
+        dummy_update = MyUpdater("¡Quiero contar!")
+        dummy_context = SimpleNamespace()
+
+        state = await menu_choice(dummy_update, dummy_context)
+        
+        # Verificaciones
+        assert state == -1  # End of the conversation
+        assert dummy_update.message.replies, "No se envió respuesta en menu_choice para contar"
+        assert "Contador incrementado" in dummy_update.message.replies[0]
 
 @pytest.mark.asyncio
 async def test_menu_choice_invalid():
