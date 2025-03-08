@@ -58,7 +58,7 @@ async def test_menu_choice_invalid():
 @pytest.mark.asyncio
 async def test_weather_flow_success():
     with patch("bot.flows.start_flow.get_weather", return_value={"cod": 200, "weather": "sunny"}), \
-         patch("bot.flows.start_flow.get_weather_analisis", return_value="Hace sol en la ciudad!"):
+         patch("bot.flows.start_flow.get_weather_analisis_openai", return_value="Hace sol en la ciudad!"):
         
         dummy_update = MyUpdater("Córdoba")
         dummy_context = SimpleNamespace()
