@@ -9,7 +9,9 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 def analize_conversation(conversation: str) -> str:
     """Analize a conversation using OpenAI.
     returns a string with the analisis from OpenAI."""
-
+    if not conversation:
+        return "¡No puedo analizar una conversación vacía!"
+    
     prompt = f'''Analiza la siguiente conversación y responde en **máximo 3 oraciones**.
             Clasifica el sentimiento como positivo, negativo o neutral y explica **brevemente** tu elección:
             \n{conversation}\n'''
