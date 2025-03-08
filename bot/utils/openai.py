@@ -7,6 +7,9 @@ logger = logging.getLogger(__name__)
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 def ask_openai_with_role(prompt: str, role: str) -> str:
+    """Ask OpenAI with a specific role and prompt.
+    Returns the response from OpenAI."""
+
     try:
         response = client.chat.completions.create(
                 messages=[
@@ -70,6 +73,7 @@ def analize_conversation(conversation: str) -> str:
 
 def get_weather_analisis_openai(weather_info: dict) -> str:
     """Obtiene un análisis del clima y recomendaciones basadas en la ciudad y el clima."""
+    
     city = weather_info.get("name", "")
     country = weather_info.get("sys", {}).get("country", "")
 

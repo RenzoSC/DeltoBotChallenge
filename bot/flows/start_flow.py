@@ -25,7 +25,7 @@ async def menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
         return ConversationHandler.END
     
     elif choice == '¡Quiero analizar nuestra conversación!':
-        await update.message.reply_text("Has elegido analizar la conversación. Por favor, envíame la conversación que deseas analizar.")
+        await update.message.reply_text("Has elegido analizar una conversación. Por favor, envíame la conversación que deseas analizar.")
         return ANALIZE_CONVERSATION
 
     else:
@@ -39,7 +39,7 @@ async def weather_flow(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     city = update.message.text
     weather_response = get_weather(city)
     if weather_response.get('cod', 400) != 200:
-        await update.message.reply_text(f"Ha ocurrido un error al obtener el clima de la ciudad {city}, ¿Podrías asegurarte de haber solicitado una ciudad válida?.")
+        await update.message.reply_text(f"Ha ocurrido un error al obtener el clima de la ciudad {city}, ¿Podrías asegurarte de haber solicitado una ciudad válida? Capaz el nombre está mal.")
     else:
         analisis = get_weather_analisis_openai(weather_response)
         await update.message.reply_text(analisis)
