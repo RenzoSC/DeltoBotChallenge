@@ -4,7 +4,7 @@ from settings import MENU, WEATHER, ANALIZE_CONVERSATION
 from db.connection import add_count_to_user
 from bot.utils.openweather import get_weather
 from bot.utils.magicloop import get_weather_analisis
-from bot.utils.openai import analize_conversation
+from bot.utils.openai import analize_conversation, get_weather_analisis_openai
 import logging
 
 logger = logging.getLogger(__name__) 
@@ -41,7 +41,7 @@ async def weather_flow(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     if weather_response.get('cod', 400) != 200:
         await update.message.reply_text(f"Ha ocurrido un error al obtener el clima de la ciudad {city}, ¿Podrías asegurarte de haber solicitado una ciudad válida?.")
     else:
-        analisis = get_weather_analisis(weather_response)
+        analisis = get_weather_analisis_openai(weather_response)
         await update.message.reply_text(analisis)
     return ConversationHandler.END
 
