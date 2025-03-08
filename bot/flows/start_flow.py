@@ -1,9 +1,10 @@
 from telegram.ext import (ContextTypes, ConversationHandler)
 from telegram import Update
-from settings import MENU, WEATHER
+from settings import MENU, WEATHER, ANALIZE_CONVERSATION
 from db.connection import add_count_to_user
 from bot.utils.openweather import get_weather
 from bot.utils.magicloop import get_weather_analisis
+from bot.utils.openai import analize_conversation
 import logging
 
 logger = logging.getLogger(__name__) 
@@ -23,6 +24,10 @@ async def menu_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
         return ConversationHandler.END
     
+    elif choice == '¡Quiero analizar nuestra conversación!':
+        await update.message.reply_text("Has elegido analizar la conversación. Por favor, envíame la conversación que deseas analizar.")
+        return ANALIZE_CONVERSATION
+
     else:
         await update.message.reply_text("Opción no válida, por favor selecciona una de las opciones del menú.")
         return MENU
@@ -50,3 +55,14 @@ async def count_option(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Ha ocurrido un error al incrementar el contador.")
     else:
         await update.message.reply_text(f"Contador incrementado. Tu contador actual es: {actual_user_count}")
+    return ConversationHandler.END
+
+async def analize_conversation_flow(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    """Analize conversation flow where user sends a conversation and the bot will use OpenAI to analize it."""
+    logger.info("analize_conversation")
+
+    conversation = update.message.text
+    response = analize_conversation(conversation)
+    await update.message.reply_text(response)
+
+    return ConversationHandler.END

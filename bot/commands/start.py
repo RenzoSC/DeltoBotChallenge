@@ -10,7 +10,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     
     add_user_if_not_exists(user_id)
 
-    reply_keyboard = [['¡Quiero saber el clima!', '¡Quiero contar!']]
+    reply_keyboard = [['¡Quiero saber el clima!', '¡Quiero contar!', '¡Quiero analizar nuestra conversación!']]
     
     await update.message.reply_text(
         '<b>¡Bienvenido al DeltoBot!</b>\n'
