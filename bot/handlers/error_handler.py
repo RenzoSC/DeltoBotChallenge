@@ -35,7 +35,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
         message = message[:MAX_MESSAGE_LENGTH]
         message += "\n\n[Message truncated.]"
 
-
-    await context.bot.send_message(
-        chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
-    )
+    if DEVELOPER_CHAT_ID:
+        await context.bot.send_message(
+            chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
+        )

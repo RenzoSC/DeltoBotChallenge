@@ -2,9 +2,9 @@ from telegram.ext import (ContextTypes, ConversationHandler)
 from telegram import Update, ReplyKeyboardMarkup
 from settings import MENU, WEATHER, ANALIZE_CONVERSATION, CLOTH_RECOMENDATIONS
 from db.connection import add_count_to_user, reached_cloth_generation_limit, add_count_cloth_generation
-from bot.utils.openweather import get_weather
-from bot.utils.magicloop import get_weather_analisis
-from bot.utils.openai import analize_conversation, get_weather_analisis_openai, generate_outfit_images, WeatherResponse
+from bot.services.openweather import get_weather
+from bot.services.magicloop import get_weather_analisis
+from bot.services.openai import analize_conversation, get_weather_analisis_openai, generate_outfit_images, WeatherResponse
 from settings import MAX_CLOTH_GENERATION_USES
 
 import logging

@@ -1,7 +1,7 @@
 from telegram.ext import (ContextTypes, ConversationHandler)
 from telegram import Update, File, ReplyKeyboardMarkup, InputFile
 from settings import RESUME_OPTIONS_MENU, RESUME_AUDIO, RESUME_PDF, RESUME_FORMAT
-from bot.utils.openai import summarize_audio, summarize_pdf, convert_text_to_audio
+from bot.services.openai import summarize_audio, summarize_pdf, convert_text_to_audio
 import logging
 
 logger = logging.getLogger(__name__) 
