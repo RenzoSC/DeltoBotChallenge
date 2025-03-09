@@ -7,7 +7,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     help_text = """
 🤖 *Bienvenido a DeltoBot* 🤖
 
-¡Este bot te ayuda a obtener recomendaciones de ropa basadas en el clima de una ciudad, analizar conversaciones y te ayuda a resumir!
+¡Este bot puede ayudarte a ver el clima de una ciudad, obtener recomendaciones de ropa basada en el clima, analizar conversaciones y resumir audios o PDFs!
 
 *Comandos disponibles:*
 /start - Inicia la conversación con el bot abriendo el menu de opciones.
