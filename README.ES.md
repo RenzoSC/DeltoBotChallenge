@@ -83,26 +83,25 @@ El proyecto está organizado de la siguiente forma:
 
 ```
 DeltoBotChallenge/
-├── bot/                    # Source code files
-│   ├── commands/           # Main commands of the bot
-│   ├── flows/              # Main command flows of the bot
-│   └── handlers/           # Bot conversation handlers
-│   └── services/           # Modules that interact with external services
-├── db/                     # DB modules
-│   ├── connection.py       # Functions to interact with DB tables
-│   ├── main.py             # Initialization of DB 
-│   └── tables.py           # Definition of DB tables
-├── tests/                  # Unit tests
-│   ├── commands/           # Tests for command modules
-│   ├── database/           # Tests for database modules 
-│   ├── flows/              # Tests for flow modules
-│   └── helpers.py          # Helper module for testing
-├── .gitignore              # Git ignore file
-├── README.md               # Project README file
-├── requirements.txt        # Python dependencies
-├── settings_local.py       # Store private variables (acts like a .env file)
-└── settings.py             # Global variables
-
+├── bot/                    # Archivos de código fuente
+│   ├── commands/           # Comandos principales del bot
+│   ├── flows/              # Flujos principales de comandos del bot
+│   ├── handlers/           # Manejadores de conversación del bot
+│   └── services/           # Módulos que interactúan con servicios externos
+├── db/                     # Archivos de la base de datos
+│   ├── connection.py       # Funciones para interactuar con tablas de la BD
+│   ├── main.py             # Inicialización de la base de datos
+│   └── tables.py           # Definición de tablas de la BD
+├── tests/                  # Pruebas unitarias
+│   ├── commands/           # Pruebas para módulos de comandos
+│   ├── database/           # Pruebas para módulos de la base de datos
+│   ├── flows/              # Pruebas para módulos de flujos
+│   └── helpers.py          # Módulo auxiliar para pruebas
+├── .gitignore              # Archivo de exclusión de Git
+├── README.md               # Archivo README del proyecto
+├── requirements.txt        # Dependencias de Python
+├── settings_local.py       # Almacena variables privadas (actúa como un .env)
+└── settings.py             # Variables globales
 
 ```
 

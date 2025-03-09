@@ -87,7 +87,7 @@ DeltoBotChallenge/
 │   ├── flows/              # Main command flows of the bot
 │   └── handlers/           # Bot conversation handlers
 │   └── services/           # Modules that interact with external services
-├── db/                     # DB modules
+├── db/                     # DB files
 │   ├── connection.py       # Functions to interact with DB tables
 │   ├── main.py             # Initialization of DB 
 │   └── tables.py           # Definition of DB tables
