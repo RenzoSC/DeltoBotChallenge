@@ -6,6 +6,9 @@ from bot.commands.help import help_command
 from bot.flows.start_flow import menu_choice, weather_flow, analize_conversation_flow, cloth_recommendation
 
 def get_start_handler():
+    """
+    Creates and returns the start command's ConversationHandler for handling different states in the conversation.
+    """
     start_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
         states={

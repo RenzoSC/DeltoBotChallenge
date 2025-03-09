@@ -4,6 +4,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Help message to show the user the available commands."""
     help_text = """
 🤖 *Bienvenido a DeltoBot* 🤖
 

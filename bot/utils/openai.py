@@ -21,7 +21,16 @@ class WeatherResponse(BaseModel):
 
 def ask_openai_with_format(prompt: str, role:str, temp:float=0.5, output_format=None):
     """Ask OpenAI with a specific prompt, role and output format.
-    Returns the response from OpenAI."""
+    
+    Args:
+    - prompt: The prompt to send to OpenAI.
+    - role: The role to use in the prompt.
+    - temp: The temperature to use in the request.
+    - output_format: The output format to use in the request. (REQUIRED)
+
+    Returns:
+    - The response from OpenAI in the format specified.
+    """
     try:
         response = client.beta.chat.completions.parse(
             messages=[
@@ -70,7 +79,15 @@ def ask_openai_with_format(prompt: str, role:str, temp:float=0.5, output_format=
 
 def ask_openai(prompt: str, role: str, temp:float=0.5) -> str:
     """Ask OpenAI with a specific role and prompt.
-    Returns the response from OpenAI."""
+
+    Args:
+    - prompt: The prompt to send to OpenAI.
+    - role: The role to use in the prompt.
+    - temp: The temperature to use in the request.
+    
+    Returns:
+    - The response from OpenAI.
+    """
 
     try:
         response = client.chat.completions.create(
@@ -119,7 +136,13 @@ def ask_openai(prompt: str, role: str, temp:float=0.5) -> str:
 
 def analize_conversation(conversation: str) -> str:
     """Analize a conversation using OpenAI.
-    returns a string with the analisis from OpenAI."""
+
+    Args:
+    - conversation: The conversation to analyze.
+
+    Returns:
+    - The response from OpenAI.
+    """
     if not conversation:
         return "¡No puedo analizar una conversación vacía!"
     
@@ -134,7 +157,13 @@ def analize_conversation(conversation: str) -> str:
 
 def generate_outfit_images(base_recomendation: str, num_options: int = 1) -> list:
     """Generate outfit images based on the weather information.
-    Returns a list with the URLs of the generated images
+
+    Args:
+    - base_recomendation: The base recommendation to use in the prompt.
+    - num_options: The number of images to generate.
+
+    Returns:
+    - A list of image URLs.
     """
     
     prompt = f'''
@@ -159,8 +188,15 @@ def generate_outfit_images(base_recomendation: str, num_options: int = 1) -> lis
     image_urls = [item.url for item in response.data]
     return image_urls
 
-def get_weather_analisis_openai(weather_info: dict) -> dict:
-    """Obtiene un análisis del clima y recomendaciones basadas en la ciudad y el clima."""
+def get_weather_analisis_openai(weather_info: dict) -> WeatherResponse:
+    """Get the weather analysis from a city using OpenAI.
+
+    Args:
+    - weather_info: A dictionary with the weather information.
+    
+    Returns:
+    - A WeatherResponse object with the weather analysis.
+    """
     
     city = weather_info.get("name", "")
     country = weather_info.get("sys", {}).get("country", "")
@@ -190,7 +226,14 @@ def get_weather_analisis_openai(weather_info: dict) -> dict:
 
 async def summarize_audio(audio:File, extension:str)->str:
     """Summarize an audio file using OpenAI.
-    Returns a string with the summary."""
+
+    Args:
+    - audio: The audio file to summarize.
+    - extension: The extension of the audio file.
+    
+    Returns:
+    - A string with the summary.
+    """
 
     transcription = ''
     try:
@@ -214,7 +257,13 @@ async def summarize_audio(audio:File, extension:str)->str:
     
 async def summarize_pdf(pdf:File)->str:
     """Summarize a PDF file (MAX 4 PAGES)
-    Returns a string with the summary"""
+
+    Args:
+    - pdf: The PDF file to summarize.
+    
+    Returns:
+    - A string with the summary.
+    """
 
     text = ""
     with tempfile.NamedTemporaryFile(delete=True, suffix=".pdf") as tmp:
@@ -245,8 +294,14 @@ async def summarize_pdf(pdf:File)->str:
     return final_summary
 
 def convert_text_to_audio(text:str) -> BytesIO:
-    """Convert text to audio using a text-to-speech service.
-    Returns the audio file."""
+    """Convert text to audio using tts model from OpenAI.
+    
+    Args:
+    - text: The text to convert to audio.
+    
+    Returns:
+    - A BytesIO object with the audio.
+    """
     
     response = client.audio.speech.create(
         model="tts-1",

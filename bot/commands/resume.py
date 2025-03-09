@@ -3,7 +3,7 @@ from telegram.ext import (ContextTypes)
 from settings import RESUME_OPTIONS_MENU
 
 async def resume_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Principal menu where user can choose between weather and count. It will return the next state."""
+    """Resume command that will show the user the options to summarize a PDF or an audio file."""
 
     reply_keyboard = [['PDF', 'Audio']]
     

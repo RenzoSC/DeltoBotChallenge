@@ -8,6 +8,11 @@ import logging
 logger = logging.getLogger(__name__) 
 
 def add_user_if_not_exists(user_id: int):
+    """Adds a user to the database if it does not exist.
+
+    Args:
+    - user_id: id of the user to be added
+    """
     db:Session = SessionLocal()
     try:
         user = db.query(TelegramUser).filter(TelegramUser.id == user_id).first()
@@ -24,6 +29,11 @@ def add_user_if_not_exists(user_id: int):
         db.close()
 
 def delete_user(user_id: int):
+    """Deletes a user from the database.
+    
+    Args:
+    - user_id: id of the user to be deleted
+    """
     db:Session = SessionLocal()
     try:
         user = db.query(TelegramUser).filter(TelegramUser.id == user_id).first()
@@ -38,12 +48,13 @@ def delete_user(user_id: int):
         db.close()
 
 def add_count_to_user(user_id: int) -> int:
-    """Adds 1 to the count of the user with the given id, 
-    if user does not exist, it will be created with count = 1
-    
-    returns actual user count
-    if an error occurs, returns -1 -> this is the error flag for this function"""
-    
+    """Adds 1 to the count of the user with the given id,
+    if user does not exist, it will be created with count = 1.
+    If an error occurs, returns -1 -> this is the error flag for this function.
+
+    Args:
+    - user_id: id of the user to be updated
+    """
     db:Session = SessionLocal()
     try:
 
@@ -68,6 +79,12 @@ def add_count_to_user(user_id: int) -> int:
         db.close()
 
 def add_user_cloth_generation_if_not_exists(user_id: int):
+    """Adds a user to the cloth generation uses table if it does not exist.
+    
+    Args:
+    - user_id: id of the user to be added
+    """
+    
     db:Session = SessionLocal()
     try:
         user = db.query(TelegramClothGenerationUses).filter(TelegramClothGenerationUses.id == user_id).first()
@@ -83,7 +100,12 @@ def add_user_cloth_generation_if_not_exists(user_id: int):
         db.close()
 
 def reset_user_count_if_new_day(user:TelegramClothGenerationUses, db:Session):
-    """Resets the count of the user if the date of the last count is different from today"""
+    """Resets the count of the user if the date of the last count is different from today
+    
+    Args:
+    - user: user to be checked (TelegramClothGenerationUses)
+    - db: database session
+    """
 
     today = datetime.now().date()
     user_date = user.count_date
@@ -96,9 +118,14 @@ def reset_user_count_if_new_day(user:TelegramClothGenerationUses, db:Session):
 def reached_cloth_generation_limit(user_id:int)->int:
     """Check if the user has reached the limit of cloth generation uses. Resets the count if the date of the last count is different from today.
     
-    returns 1 if the user has reached the limit
-    returns 0 if the user has not reached the limit
-    returns -1 if an error occurs"""
+    Args:
+    - user_id: id of the user to be checked
+
+    Returns:
+    - 1 if the user has reached the limit
+    - 0 if the user has not reached the limit
+    - -1 if an error occurs
+    """
     
     db:Session = SessionLocal()
     try:
@@ -123,10 +150,15 @@ def reached_cloth_generation_limit(user_id:int)->int:
         db.close()
 
 def add_count_cloth_generation(user_id:int)->int:
-    """Adds 1 to the count of the user with the given id
-    
-    returns actual user count
-    if an error occurs, returns -1 -> this is the error flag for this function"""
+    """Adds 1 to the count of cloth generation uses of the user with the given id.
+
+    Args:
+    - user_id: id of the user to be updated
+
+    Returns:
+    - actual user count if the operation is successful
+    - -1 if an error occurs
+    """ 
     
     db:Session = SessionLocal()
     try:

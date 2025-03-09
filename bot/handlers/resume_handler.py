@@ -6,6 +6,10 @@ from bot.commands.help import help_command
 from bot.flows.resume_flow import resume_menu_choice, resume_audio, resume_pdf, resume_format_choice
 
 def get_resume_handler():
+    """
+    Creates and returns the resume command's ConversationHandler for handling different states in the conversation.
+    """
+
     start_handler = ConversationHandler(
         entry_points=[CommandHandler('resume', resume_command)],
         states={
