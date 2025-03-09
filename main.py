@@ -1,7 +1,8 @@
 import logging
-from telegram.ext import (Application)
+from telegram.ext import Application, CommandHandler
 
 from settings import TELEGRAM_BOT_TOKEN
+from bot.commands.help import help_command
 from bot.handlers.start_handler import get_start_handler
 from bot.handlers.resume_handler import get_resume_handler
 from bot.handlers.error_handler import error_handler
@@ -20,6 +21,7 @@ def main() -> None:
     start_handler = get_start_handler()
     resume_handler = get_resume_handler()
     application.add_handler(start_handler)
+    application.add_handler(CommandHandler('help',help_command ))
     application.add_handler(resume_handler)
     application.add_error_handler(error_handler)
     application.run_polling()
